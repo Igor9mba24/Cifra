@@ -1,0 +1,52 @@
+﻿@model Manufacturer
+
+@{
+    ViewData["Title"] = "Добавление нового производителя";
+}
+
+<div class="row text">
+    <div class="col-md-8 mx-auto">
+        <p>
+            <h1>Добавьте нового произвводителя:</h1>
+        </p>
+        <div class="row" style="margin-top:35px">
+            <div class="col-md-8 mx-auto">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group text-center">
+                        <img id="ProfilePicturePreview" style="max-width:300px; max-height:300px; border: 1px solid #ddd; border-radius: 10px; padding: 5px; box-shadow: 0 0 10px #ddd;" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProfilePictureURL" class="form-label"></label>
+                        <input asp-for="ProfilePictureURL" class="form-control" />
+                        <span asp-validation-for="ProfilePictureURL" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FullName" class="form-label"></label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="margin-top:10px">
+                        <input type="submit" value="Create" class="btn btn-outline-success float-end" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Показать все</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var preview = document.getElementById('ProfilePicturePreview');
+            preview.src = $("#ProfilePictureURL").val();
+        })
+
+        $("#ProfilePictureURL").on("change", function () {
+            var preview = document.getElementById('ProfilePicturePreview');
+            preview.src = $(this).val();
+        })
+    </script>
+}

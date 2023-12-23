@@ -1,0 +1,88 @@
+﻿@model NewProductVM
+@using Cifra.Data.Enums;
+@using Cifra.Data.ViewModels
+
+@{
+    ViewData["Title"] = "Удаление " + Model.Name;
+}
+
+<div class="row">
+    <div class="col-12 col-sm-6 col-md-8 col-lg-8 mx-auto">
+        <p>
+            <h4>Подтверждение  удаления @Model.Name</h4>
+        </p>
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="row">
+                    @*Image preview*@
+                    <div class="form-group text-center" style="margin-bottom:5px">
+                        <img id="ImageUrlPreview" style="max-width:300px; max-height:300px; border: 1px solid #ddd; border-radius: 10px; padding: 5px; box-shadow: 0 0 10px #ddd;" />
+                    </div>
+                    <hr style="border: 0.5px solid gray; height: 1px;" />
+                    @*Left side*@
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ReleaseDate" class="form-label"></label>
+                            <input asp-for="ReleaseDate" type="date" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Price" class="form-label"></label>
+                            <input asp-for="Price" type="number" min="0" step="any" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ImageURL" class="form-label"></label>
+                            <input asp-for="ImageURL" class="form-control" readonly>
+                        </div>
+                    </div>
+                    @*Right side*@
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label asp-for="CountryId" class="form-label"></label>
+                            <select asp-for="CountryId" class="form-control" asp-items="ViewBag.CountryId" disabled></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Category" class="form-label"></label>
+                            <select asp-for="Category" class="form-control" asp-items="@Html.GetEnumSelectList<ProductCategory>()" disabled></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="    ViewId" class="form-label"></label>
+                            <select asp-for="ViewId" class="form-control" asp-items="ViewBag.ViewId" disabled></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ManufacturerId" class="form-label"></label>
+                            <select asp-for="ManufacturerId" class="form-control" asp-items="ViewBag.ManufacturerId" multiple disabled></select>
+                        </div>
+                    </div>
+                    @*Description*@
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+                @*Submit section*@
+                <div class="form-group" style="margin-top:10px">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="submit" value="Confirm" class="btn btn-danger float-end" />
+                    </form>
+                    <a class="btn btn-outline-secondary" asp-action="Index">Показать все</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            var preview = document.getElementById('ImageUrlPreview');
+            preview.src = $("#ImageURL").val();
+        })
+    </script>
+}

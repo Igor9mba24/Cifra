@@ -1,0 +1,49 @@
+﻿@model List<Order>
+
+@{
+    ViewData["Title"] = "Заказы";
+}
+
+<p>
+    <h4>Список всех ваших заказов</h4>
+</p>
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">Индификация заказа</th>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Администратор"))
+                {
+                    <th scope="col">Пользователь</th>
+                }
+                <th scope="col">Названия товара(ов)</th>
+                <th scope="col">Итоговая цена</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Администратор"))
+                    {
+                        <td> @order.User.FullName </td>
+                    }
+                    <td>
+                        <ul style="list-style-type:none">
+                            @foreach (var product in order.OrderItems)
+                            {
+                                <li>
+                                    <div class="alert alert-info">
+                                        <span class="badge bg-success">@(product.Quantity)x</span> [@product.Price.ToString("c")] - @product.Product.Name
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                    <td>@order.OrderItems.Select(orderitem => orderitem.Price * orderitem.Quantity).Sum().ToString("c")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

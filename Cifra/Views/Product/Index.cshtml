@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Список товаров";
+}
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4" style="margin-bottom: 20px">
+            <div class="card">
+                <img src="@product.ImageURL" class="card-img-top img-fluid position-relative" alt="Product cover">
+
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Администратор"))
+                {
+                    <a asp-action="Edit" asp-route-id="@product.Id" class="position-absolute text-white" style="top: 5px; right: 10px; font-size: 2em">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                }
+
+                <div class="card-body">
+                    <h5 class="card-title text-">@product.Name</h5>
+                    <p class="card-text">@product.Description</p>
+                    <p class="card-text"><small class="text-muted">Platform: @product.country.Name</small></p>
+                    <p class="card-text"><small class="text-muted">Category: @product.Category</small></p>
+                    <p class="card-text"><small class="text-muted">Release Date: @product.ReleaseDate.ToString("yyyy-MM-dd")</small></p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            Статус:
+                            @if (DateTime.Now >= product.ReleaseDate)
+                            {
+                                <span class="badge bg-success text-white">Доступен</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-primary text-white">Предстоит</span>
+                            }
+                        </small>
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="btn btn-outline-primary" asp-action="Details" asp-route-id="@product.Id">
+                            <i class="bi bi-eye-fill"></i> Показать детали
+                        </a>
+                        <a class="btn btn-success text-white" asp-controller="Orders" asp-action="AddToShoppingCart" asp-route-id="@product.Id">
+                            <i class="bi bi-cart-plus"></i>
+                            @((DateTime.Now >= product.ReleaseDate) ? "Add to Cart " : "Pre-Purchase ")(Price $@product.Price)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@await Html.PartialAsync("_CreateItem", "Product")

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewData["Title"] = "Пользователи";
+}
+
+<p>
+    <h4>Список всех ваших пользователей</h4>
+</p>
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">@Html.DisplayNameFor(model => model.FullName)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.UserName)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Email)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.FullName</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

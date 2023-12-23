@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Country>
+
+@{
+    ViewData["Title"] = "Список всех стран";
+}
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Logo)</th>
+                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Администратор"))
+                    {
+                        <th>Actions</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var country in Model)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            <img src="@country.Logo" style="max-width:120px;max-height:120px" />
+                        </td>
+                        <td class="align-middle">
+                            @country.Name
+                        </td>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Администратор"))
+                        {
+                            <td class="align-middle" style="white-space:nowrap">
+                                <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@country.Id"><i class="bi bi-pencil-square"></i> Изменить</a>
+                                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@country.Id"><i class="bi bi-eye"></i> Детали</a>
+                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@country.Id"><i class="bi bi-trash"></i> Удалить</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@await Html.PartialAsync("_CreateItem", "Country")

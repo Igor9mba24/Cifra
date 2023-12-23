@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Заказ ввыыполнен";
+}
+
+
+<div class="container py-5">
+    <div class="card text-center alert alert-success">
+        <div class="card-body">
+            <h1 class="card-title mb-3">
+                <i class="bi bi-check-circle-fill"></i>
+                Заказ выполнен успешно
+            </h1>
+            <p class="card-text">
+                Спасибо большое за покупку. Вы можете увидеть список всех  ваших заказов в списке "Мои заказы"!
+            </p>
+            <hr style="border: 0.5px solid gray; height: 1px;" />
+            <a href="/" class="btn btn-outline-primary">Вернуться  на  главную</a>
+            <a asp-action="Index" class="btn btn-success">
+                <i class="bi bi-cart-check"></i>
+                Мои заказы
+            </a>
+        </div>
+    </div>
+</div>
